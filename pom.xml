@@ -8,11 +8,11 @@
 		<version>2.7.10</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>com.ejerciciosmesa</groupId>
+	<groupId>com.automotriz</groupId>
 	<artifactId>Catalogo</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>Catalogo</name>
-	<description>Aplicación de Catálogo de Productos</description>
+	<description>Aplicación de Catálogo Automotriz</description>
 	<properties>
 		<java.version>17</java.version>
 	</properties>

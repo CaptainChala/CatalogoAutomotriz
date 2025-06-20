@@ -1,4 +1,4 @@
-package com.ejerciciosmesa.catalogo.config;
+package com.automotriz.catalogo.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

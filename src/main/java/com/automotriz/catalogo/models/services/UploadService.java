@@ -1,4 +1,4 @@
-package com.ejerciciosmesa.catalogo.models.services;
+package com.automotriz.catalogo.models.services;
 
 import java.io.IOException;
 import java.net.MalformedURLException;

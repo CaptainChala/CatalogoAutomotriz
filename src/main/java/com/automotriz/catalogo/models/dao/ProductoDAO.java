@@ -1,11 +1,11 @@
-package com.ejerciciosmesa.catalogo.models.dao;
+package com.automotriz.catalogo.models.dao;
 
 import org.springframework.data.repository.PagingAndSortingRepository;
 
 
 
 
-import com.ejerciciosmesa.catalogo.models.entities.Producto;
+import com.automotriz.catalogo.models.entities.Producto;
 
 public interface ProductoDAO extends PagingAndSortingRepository<Producto, Long> {
 }

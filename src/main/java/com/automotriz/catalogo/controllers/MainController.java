@@ -1,4 +1,4 @@
-package com.ejerciciosmesa.catalogo.controllers;
+package com.automotriz.catalogo.controllers;
 
 import java.net.MalformedURLException;
 
@@ -9,7 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
-import com.ejerciciosmesa.catalogo.models.services.UploadService;
+import com.automotriz.catalogo.models.services.UploadService;
 
 @Controller
 public class MainController {

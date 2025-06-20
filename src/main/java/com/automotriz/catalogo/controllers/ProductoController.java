@@ -1,11 +1,11 @@
-package com.ejerciciosmesa.catalogo.controllers;
+package com.automotriz.catalogo.controllers;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import com.ejerciciosmesa.catalogo.util.paginator.PageRender;
+import com.automotriz.catalogo.util.paginator.PageRender;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -29,15 +29,15 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-import com.ejerciciosmesa.catalogo.models.services.UploadService;
+import com.automotriz.catalogo.models.services.UploadService;
 
 
 
 
 
-import com.ejerciciosmesa.catalogo.appdata.AppData;
-import com.ejerciciosmesa.catalogo.models.entities.Producto;
-import com.ejerciciosmesa.catalogo.models.services.ProductoService;
+import com.automotriz.catalogo.appdata.AppData;
+import com.automotriz.catalogo.models.entities.Producto;
+import com.automotriz.catalogo.models.services.ProductoService;
 
 
 

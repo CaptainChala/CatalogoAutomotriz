@@ -1,4 +1,4 @@
-package com.ejerciciosmesa.catalogo.appdata;
+package com.automotriz.catalogo.appdata;
 
 import java.util.HashMap;
 

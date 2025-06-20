@@ -1,11 +1,11 @@
-package com.ejerciciosmesa.catalogo.models.services;
+package com.automotriz.catalogo.models.services;
 
 import java.util.List;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
-import com.ejerciciosmesa.catalogo.models.entities.Producto;
+import com.automotriz.catalogo.models.entities.Producto;
 
 public interface ProductoService {
 

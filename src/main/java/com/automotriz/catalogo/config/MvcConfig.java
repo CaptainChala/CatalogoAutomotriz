@@ -1,4 +1,4 @@
-package com.ejerciciosmesa.catalogo.config;
+package com.automotriz.catalogo.config;
 
 import java.nio.file.Paths;
 

@@ -1,4 +1,4 @@
-package com.ejerciciosmesa.catalogo.controllers;
+package com.automotriz.catalogo.controllers;
 
 import java.security.Principal;
 
@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.ejerciciosmesa.catalogo.appdata.AppDataImpl;
+import com.automotriz.catalogo.appdata.AppDataImpl;
 
 @Controller
 public class LoginController {

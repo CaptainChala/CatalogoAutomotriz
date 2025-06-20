@@ -1,4 +1,4 @@
-package com.ejerciciosmesa.catalogo.models.entities;
+package com.automotriz.catalogo.models.entities;
 
 import java.io.Serializable;
 import java.math.BigDecimal;

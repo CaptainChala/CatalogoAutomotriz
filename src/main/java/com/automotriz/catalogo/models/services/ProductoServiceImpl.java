@@ -1,4 +1,4 @@
-package com.ejerciciosmesa.catalogo.models.services;
+package com.automotriz.catalogo.models.services;
 
 import java.util.List;
 
@@ -7,8 +7,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.ejerciciosmesa.catalogo.models.dao.ProductoDAO;
-import com.ejerciciosmesa.catalogo.models.entities.Producto;
+import com.automotriz.catalogo.models.dao.ProductoDAO;
+import com.automotriz.catalogo.models.entities.Producto;
 
 @Service
 public class ProductoServiceImpl implements ProductoService {

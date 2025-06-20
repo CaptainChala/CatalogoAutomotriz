@@ -1,4 +1,4 @@
-package com.ejerciciosmesa.catalogo.controllers;
+package com.automotriz.catalogo.controllers;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.http.HttpServletRequest;
