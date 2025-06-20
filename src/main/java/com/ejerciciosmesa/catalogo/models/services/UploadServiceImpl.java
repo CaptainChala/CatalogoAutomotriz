@@ -18,9 +18,8 @@ import org.springframework.web.multipart.MultipartFile;
 @Service
 public class UploadServiceImpl implements UploadService {
 
-  
     final static String UPLOAD_FOLDER = "src/main/resources/static/images/vehiculos";
-    
+
     @Override
     public Resource load(String filename) throws MalformedURLException {
         Path pathFile = getPath(filename);
@@ -35,12 +34,11 @@ public class UploadServiceImpl implements UploadService {
     public String copy(MultipartFile file) throws IOException {
         String uniqueName = UUID.randomUUID().toString() + "_" + file.getOriginalFilename();
         Path pathUploadsAbsolute = getPath(uniqueName);
-        
-       
+
         Files.createDirectories(pathUploadsAbsolute.getParent());
-        
+
         InputStream is = file.getInputStream();
-        
+
         Files.copy(is, pathUploadsAbsolute, StandardCopyOption.REPLACE_EXISTING);
         is.close();
         return uniqueName;
@@ -51,8 +49,8 @@ public class UploadServiceImpl implements UploadService {
         if (filename != null && !filename.isEmpty()) {
             Path pathFile = getPath(filename);
             File file = pathFile.toFile();
-            if(file.exists() && file.canRead()) {
-                if(file.delete()) {
+            if (file.exists() && file.canRead()) {
+                if (file.delete()) {
                     return true;
                 }
             }

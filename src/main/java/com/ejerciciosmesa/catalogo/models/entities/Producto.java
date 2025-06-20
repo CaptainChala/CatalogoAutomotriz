@@ -8,10 +8,8 @@ import java.util.Objects;
 import javax.persistence.*;
 import javax.validation.constraints.*;
 
-
-
 @Entity
-@Table(name="producto")
+@Table(name = "producto")
 public class Producto implements Serializable {
 
 	@Id
@@ -43,39 +41,32 @@ public class Producto implements Serializable {
 	private BigDecimal precio;
 
 	@NotBlank
-	@Column(name = "estado") 
+	@Column(name = "estado")
 	private String estado;
 
 	@NotBlank
-	@Column(name = "tipo_bencina") 
+	@Column(name = "tipo_bencina")
 	private String tipoBencina;
 
 	@Column(name = "transmision")
 	private String transmision;
 
-	@Column(name= "kilometraje")
+	@Column(name = "kilometraje")
 	private String kilometraje;
-
-
 
 	@Column(name = "imagen")
 	private String imagen;
 
-	public Producto() {}
-
-
+	public Producto() {
+	}
 
 	public String getKilometraje() {
 		return kilometraje;
 	}
 
-
-
 	public void setKilometraje(String kilometraje) {
 		this.kilometraje = kilometraje;
 	}
-
-
 
 	public Long getId() {
 		return id;
@@ -84,6 +75,7 @@ public class Producto implements Serializable {
 	public String getCodigo() {
 		return codigo;
 	}
+
 	public void setCodigo(String codigo) {
 		this.codigo = codigo;
 	}
@@ -91,6 +83,7 @@ public class Producto implements Serializable {
 	public String getMarca() {
 		return marca;
 	}
+
 	public void setMarca(String marca) {
 		this.marca = marca;
 	}
@@ -98,6 +91,7 @@ public class Producto implements Serializable {
 	public String getModelo() {
 		return modelo;
 	}
+
 	public void setModelo(String modelo) {
 		this.modelo = modelo;
 	}
@@ -105,6 +99,7 @@ public class Producto implements Serializable {
 	public Integer getAnio() {
 		return anio;
 	}
+
 	public void setAnio(Integer anio) {
 		this.anio = anio;
 	}
@@ -112,6 +107,7 @@ public class Producto implements Serializable {
 	public BigDecimal getPrecio() {
 		return precio;
 	}
+
 	public void setPrecio(BigDecimal precio) {
 		this.precio = precio;
 	}
@@ -119,6 +115,7 @@ public class Producto implements Serializable {
 	public String getEstado() {
 		return estado;
 	}
+
 	public void setEstado(String estado) {
 		this.estado = estado;
 	}
@@ -126,6 +123,7 @@ public class Producto implements Serializable {
 	public String getTipoBencina() {
 		return tipoBencina;
 	}
+
 	public void setTipoBencina(String tipoBencina) {
 		this.tipoBencina = tipoBencina;
 	}
@@ -133,15 +131,15 @@ public class Producto implements Serializable {
 	public String getTransmision() {
 		return transmision;
 	}
+
 	public void setTransmision(String transmision) {
 		this.transmision = transmision;
 	}
 
-
-
 	public String getImagen() {
 		return imagen;
 	}
+
 	public void setImagen(String imagen) {
 		this.imagen = imagen;
 	}
@@ -153,17 +151,20 @@ public class Producto implements Serializable {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj) return true;
-		if (obj == null || getClass() != obj.getClass()) return false;
+		if (this == obj)
+			return true;
+		if (obj == null || getClass() != obj.getClass())
+			return false;
 		Producto other = (Producto) obj;
 		return Objects.equals(id, other.id);
 	}
 
-	    public String getPrecioFormateado() {
-        if (precio == null) return "0";
-        DecimalFormat df = new DecimalFormat("#,###");
-        return df.format(precio);
-    }
+	public String getPrecioFormateado() {
+		if (precio == null)
+			return "0";
+		DecimalFormat df = new DecimalFormat("#,###");
+		return df.format(precio);
+	}
 
 	private static final long serialVersionUID = 1L;
 }

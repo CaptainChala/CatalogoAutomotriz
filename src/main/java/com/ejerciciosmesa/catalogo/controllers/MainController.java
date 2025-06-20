@@ -15,31 +15,31 @@ import com.ejerciciosmesa.catalogo.models.services.UploadService;
 public class MainController {
 
 	private final UploadService uploadService;
-	
+
 	public MainController(UploadService uploadService) {
 		this.uploadService = uploadService;
 	}
 
-	@GetMapping({"","/","/index"})
+	@GetMapping({ "", "/", "/index" })
 	public String index() {
 		return "redirect:/productos";
 	}
-	
+
 	@GetMapping("/upload/{filename:.+}")
 	public ResponseEntity<Resource> viewImage(@PathVariable String filename) {
-		
+
 		Resource resource = null;
-		
+
 		try {
 			resource = uploadService.load(filename);
 		} catch (MalformedURLException e) {
 			e.printStackTrace();
 		}
-		
+
 		return ResponseEntity.ok()
-				.header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\""+resource.getFilename()+"\"")
+				.header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + resource.getFilename() + "\"")
 				.body(resource);
-		
+
 	}
-	
+
 }

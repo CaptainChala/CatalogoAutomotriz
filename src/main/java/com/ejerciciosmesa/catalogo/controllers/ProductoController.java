@@ -24,6 +24,11 @@ import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
+import java.time.LocalDate;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+
 import com.ejerciciosmesa.catalogo.models.services.UploadService;
 
 
@@ -44,180 +49,174 @@ public class ProductoController {
 
 	private final AppData appData;
 	private final ProductoService productoService;
-	
-	
-	
-	
-	
+
 	private final UploadService uploadService;
 
-		
-	public static final String OPGEN = "PRODUCTOS"; 
-	
+	public static final String OPGEN = "PRODUCTOS";
+
 	public ProductoController(UploadService uploadService,
-										 
-										 
-									     ProductoService productoService,
-									     AppData applicationData
-		   
-		   		 
-			) {
+
+			ProductoService productoService,
+			AppData applicationData
+
+	) {
 		this.appData = applicationData;
 		this.productoService = productoService;
-		
-		
-		
 
 		this.uploadService = uploadService;
 
 	}
 
-		
-	
-	@GetMapping({"","/","/list"})
-	public String list(@RequestParam(name="page", defaultValue="0") int page, Model model) {
-	
-		fillApplicationData(model,"LIST");
-		
+	@GetMapping({ "", "/", "/list" })
+	public String list(@RequestParam(name = "page", defaultValue = "0") int page, Model model) {
+
+		fillApplicationData(model, "LIST");
+
 		Pageable pageRequest = PageRequest.of(page, 10);
-		Page<Producto> pageProducto = productoService.findAll(pageRequest); 
-		PageRender<Producto> paginator = new PageRender<>("/productos/list",pageProducto,5);
-		
+		Page<Producto> pageProducto = productoService.findAll(pageRequest);
+		PageRender<Producto> paginator = new PageRender<>("/productos/list", pageProducto, 5);
 
 		model.addAttribute("numproducto", productoService.count());
 		model.addAttribute("listproducto", pageProducto);
-		model.addAttribute("paginator",paginator);
-		
+		model.addAttribute("paginator", paginator);
+
 		return "productos/list";
 	}
-	
-	@GetMapping("/form")
-	public String form(Model model) {
-		Producto producto = new Producto();		
-		model.addAttribute("producto",producto);
-		
-		fillApplicationData(model,"CREATE");
-		
-		return "productos/form";
-	}
-	
-	@GetMapping("/form/{id}")
-	public String form(@PathVariable Long id, Model model, RedirectAttributes flash) {
-		Producto producto = productoService.findOne(id);
-		if(producto==null) {
-			flash.addFlashAttribute("error","Producto no encontrado");
-			return "redirect:/producto/list";
-		}
-		
-		model.addAttribute("producto", producto);
-		
-		fillApplicationData(model,"UPDATE");
-		
-		return "productos/form";
-	}
-	
-	
-	@PostMapping("/form")
-	@Secured("ROLE_ADMIN")
-	public String form(@Valid Producto producto,  
-			           BindingResult result, 
-					   
-					   Model model,
-					   @RequestAttribute("file") MultipartFile image_formname,
-@RequestParam("imageImageText") String imageImageText,
-@RequestParam("imageImageTextOld") String imageImageTextOld,
 
-					   RedirectAttributes flash,
-					   SessionStatus status) {
-		
-		if(producto.getId()==null)
-			fillApplicationData(model,"CREATE");
-		else
-			fillApplicationData(model,"UPDATE");
-		
-		String msg = (producto.getId()==null) ? "Vehiculo registrado correctamente" : "Vehiculo modificado correctamente";
-		
-		if(result.hasErrors()) {
-			return "productos/form";
-		}
-		
-		if(!image_formname.isEmpty())
-	AddUpdateImageImage(image_formname,producto);
-else {
-	if(imageImageText.isEmpty() && !(imageImageTextOld.isEmpty())) {
-		uploadService.delete(imageImageTextOld);
-		producto.setImagen(null);
-	}
+@GetMapping("/form")
+public String form(Model model) {
+    Producto producto = new Producto();
+    model.addAttribute("producto", producto);
+
+    // Lista de años desde 1980 hasta el año actual
+    List<Integer> years = IntStream.rangeClosed(2015, LocalDate.now().getYear())
+            .boxed()
+            .sorted((a, b) -> b.compareTo(a)) // orden descendente
+            .collect(Collectors.toList());
+    model.addAttribute("years", years);
+
+    fillApplicationData(model, "CREATE");
+
+    return "productos/form";
 }
 
 
+@GetMapping("/form/{id}")
+public String form(@PathVariable Long id, Model model, RedirectAttributes flash) {
+    Producto producto = productoService.findOne(id);
+    if (producto == null) {
+        flash.addFlashAttribute("error", "Producto no encontrado");
+        return "redirect:/productos/list";
+    }
 
-		
-		
-		
+    model.addAttribute("producto", producto);
+
+    // También agregar lista de años al editar
+    List<Integer> years = IntStream.rangeClosed(2015, LocalDate.now().getYear())
+            .boxed()
+            .sorted((a, b) -> b.compareTo(a))
+            .collect(Collectors.toList());
+    model.addAttribute("years", years);
+
+    fillApplicationData(model, "UPDATE");
+
+    return "productos/form";
+}
+
+
+	@PostMapping("/form")
+	@Secured("ROLE_ADMIN")
+	public String form(@Valid Producto producto,
+			BindingResult result,
+
+			Model model,
+			@RequestAttribute("file") MultipartFile image_formname,
+			@RequestParam("imageImageText") String imageImageText,
+			@RequestParam("imageImageTextOld") String imageImageTextOld,
+
+			RedirectAttributes flash,
+			SessionStatus status) {
+
+		if (producto.getId() == null)
+			fillApplicationData(model, "CREATE");
+		else
+			fillApplicationData(model, "UPDATE");
+
+		String msg = (producto.getId() == null) ? "Vehiculo registrado correctamente"
+				: "Vehiculo modificado correctamente";
+
+		if (result.hasErrors()) {
+			return "productos/form";
+		}
+
+		if (!image_formname.isEmpty())
+			AddUpdateImageImage(image_formname, producto);
+		else {
+			if (imageImageText.isEmpty() && !(imageImageTextOld.isEmpty())) {
+				uploadService.delete(imageImageTextOld);
+				producto.setImagen(null);
+			}
+		}
+
 		productoService.save(producto);
 		status.setComplete();
-		flash.addFlashAttribute("success",msg);
+		flash.addFlashAttribute("success", msg);
 		return "redirect:/productos/list";
 	}
-	
-	
-	private void AddUpdateImageImage(MultipartFile image, Producto producto) {
-					
-			if(producto.getId()!=null &&
-			   producto.getId()>0 && 
-			   producto.getImagen()!=null &&
-			   producto.getImagen().length() > 0) {
-			
-				uploadService.delete(producto.getImagen());
-			}
-			
-			String uniqueName = null;
-			try {
-				uniqueName = uploadService.copy(image);
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-			
-			producto.setImagen(uniqueName);
-		
-	}
 
-	
+	private void AddUpdateImageImage(MultipartFile image, Producto producto) {
+
+		if (producto.getId() != null &&
+				producto.getId() > 0 &&
+				producto.getImagen() != null &&
+				producto.getImagen().length() > 0) {
+
+			uploadService.delete(producto.getImagen());
+		}
+
+		String uniqueName = null;
+		try {
+			uniqueName = uploadService.copy(image);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		producto.setImagen(uniqueName);
+
+	}
 
 	@Secured("ROLE_ADMIN")
 	@GetMapping("/delete/{id}")
 	public String delete(@PathVariable Long id, RedirectAttributes flash) {
-		
-		if(id>0) { 			
+
+		if (id > 0) {
 			Producto producto = productoService.findOne(id);
-			
-			if(producto != null) {
-				
-		/* Only if there is required relation with this entity */			
-				
-		
-		/* Only if there is no required relation with this entity, or there is a
-		 * required relation but no entity related at the moment, (checked before) */
-				
-		
-		/* Relations revised, the entity can be removed */
+
+			if (producto != null) {
+
+				/* Only if there is required relation with this entity */
+
+				/*
+				 * Only if there is no required relation with this entity, or there is a
+				 * required relation but no entity related at the moment, (checked before)
+				 */
+
+				/* Relations revised, the entity can be removed */
 				productoService.remove(id);
 			} else {
-				flash.addFlashAttribute("error","Producto no encontrado");
+				flash.addFlashAttribute("error", "Producto no encontrado");
 				return "redirect:/productos/list";
 			}
-			
-			if(producto.getImagen()!=null)
-	uploadService.delete(producto.getImagen());
 
-						
-			flash.addFlashAttribute("success","Producto eliminado correctamente");
+			if (producto.getImagen() != null)
+				uploadService.delete(producto.getImagen());
+
+			flash.addFlashAttribute("success", "Producto eliminado correctamente");
 		}
-		
+
 		return "redirect:/productos/list";
 	}
-	
+
 	@GetMapping("/view/{id}")
 	public String view(@PathVariable Long id, Model model, RedirectAttributes flash) {
 
@@ -232,15 +231,15 @@ else {
 			model.addAttribute("producto", producto);
 			fillApplicationData(model, "VIEW");
 			return "productos/view";
-			
+
 		}
 
 		return "redirect:/productos/list";
 	}
-	
-	
+
 	@GetMapping("/viewimg/{id}/{imageField}")
-	public String viewimg(@PathVariable Long id, @PathVariable String imageField, Model model, RedirectAttributes flash) {
+	public String viewimg(@PathVariable Long id, @PathVariable String imageField, Model model,
+			RedirectAttributes flash) {
 
 		if (id > 0) {
 			Producto producto = productoService.findOne(id);
@@ -252,24 +251,20 @@ else {
 
 			model.addAttribute("producto", producto);
 			fillApplicationData(model, "VIEWIMG");
-			model.addAttribute("backOption",true);
-			model.addAttribute("imageField",imageField);
-			
+			model.addAttribute("backOption", true);
+			model.addAttribute("imageField", imageField);
+
 			return "productos/viewimg";
-			
+
 		}
 
 		return "redirect:/productos/list";
 	}
-	
-	
-	
-	
+
 	private void fillApplicationData(Model model, String screen) {
-		model.addAttribute("applicationData",appData);
-		model.addAttribute("optionCode",OPGEN);
-		model.addAttribute("screen",screen);
+		model.addAttribute("applicationData", appData);
+		model.addAttribute("optionCode", OPGEN);
+		model.addAttribute("screen", screen);
 	}
-	
-		
+
 }

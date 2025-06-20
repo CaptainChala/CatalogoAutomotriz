@@ -9,11 +9,9 @@ public class GeneralOption implements Comparable<GeneralOption> {
 	private String name;
 	private String link;
 	private String mainScreenCode;
-	
-		
-	private HashMap<String, String> screens; 
+
+	private HashMap<String, String> screens;
 	private String emptyMessage;
-	
 
 	public GeneralOption(int order, String key, String name, String link, String mainScreenCode) {
 		this.order = order;
@@ -23,21 +21,31 @@ public class GeneralOption implements Comparable<GeneralOption> {
 		this.mainScreenCode = mainScreenCode;
 		screens = new HashMap<>();
 	}
-	
-	public String getKey() {return key;}
-	public String getName() {return name;}
-	public String getLink() {return link;}
-	public String getMainScreenCode() {return mainScreenCode;}
-	
-	
+
+	public String getKey() {
+		return key;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public String getLink() {
+		return link;
+	}
+
+	public String getMainScreenCode() {
+		return mainScreenCode;
+	}
+
 	public void addScreen(String code, String name) {
 		screens.put(code, name);
 	}
-	
+
 	public String getScreen(String code) {
 		return screens.get(code);
 	}
-	
+
 	public String getMainScreenName() {
 		return screens.get(mainScreenCode);
 	}
@@ -45,14 +53,14 @@ public class GeneralOption implements Comparable<GeneralOption> {
 	public String getEmptyMessage() {
 		return emptyMessage;
 	}
-	
+
 	public void setEmptyMessage(String emptyMessage) {
 		this.emptyMessage = emptyMessage;
 	}
-	
+
 	@Override
 	public int compareTo(GeneralOption go) {
-		return this.order-go.order;
+		return this.order - go.order;
 	}
-	
+
 }

@@ -1,12 +1,13 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
 <head>
-<th:block th:replace="layout/layout :: head-basic"></th:block>
-<th:block th:replace="layout/layout :: bootstrap-css"></th:block>
-<th:block th:replace="layout/layout :: jquery-ui-css"></th:block>
-<th:block th:replace="layout/layout :: general-css"></th:block>
+	<th:block th:replace="layout/layout :: head-basic"></th:block>
+	<th:block th:replace="layout/layout :: bootstrap-css"></th:block>
+	<th:block th:replace="layout/layout :: jquery-ui-css"></th:block>
+	<th:block th:replace="layout/layout :: general-css"></th:block>
 </head>
+
 <body>
 	<nav th:replace="layout/layout :: menu"></nav>
 	<div th:replace="layout/layout :: screen-title"></div>
@@ -16,183 +17,184 @@
 
 		<div class="row justify-content-center mt-3 ms-1 me-1">
 			<div class="col-12 formclass create-form shadow">
-<form class="mt-3" th:object="${producto}" method="post"
-	th:action="@{/productos/form}" enctype="multipart/form-data">
+				<form class="mt-3" th:object="${producto}" method="post" th:action="@{/productos/form}"
+					enctype="multipart/form-data">
 
 
-<div class="row g-3 align-items-center mb-3">
-    <div class="col-md-2">
-        <label for="codigo" class="form-label mb-0 fw-bold">Patente:</label>
-    </div>
-    <div class="col-md-4 mt-1 mt-md-3">
-        <input type="text" class="form-control form-control-sm" id="codigo"
-            th:field="*{codigo}" maxlength="8" placeholder="XXX-123 ó XXXX-12"
-            oninput="formatearPatente(this)">
-    </div>
-    <span class="text-danger" th:if="${#fields.hasErrors('codigo')}" th:errors="*{codigo}"></span>
-</div>
+					<div class="row g-3 align-items-center mb-3">
+						<div class="col-md-2">
+							<label for="codigo" class="form-label mb-0 fw-bold">Patente:</label>
+						</div>
+						<div class="col-md-4 mt-1 mt-md-3">
+							<input type="text" class="form-control form-control-sm" id="codigo" th:field="*{codigo}"
+								maxlength="8" placeholder="XXX-123 ó XXXX-12" oninput="formatearPatente(this)">
+						</div>
+						<span class="text-danger" th:if="${#fields.hasErrors('codigo')}" th:errors="*{codigo}"></span>
+					</div>
 
-	<!-- Marca -->
-	<div class="row g-3 align-items-center mb-3">
-		<div class="col-md-2">
-			<label for="marca" class="form-label mb-0 fw-bold">Marca:</label>
-		</div>
-		<div class="col-md-4 mt-1 mt-md-3">
-			<input type="text" class="form-control form-control-sm" id="marca"
-				th:field="*{marca}">
-		</div>
-		<span class="text-danger" th:if="${#fields.hasErrors('marca')}" th:errors="*{marca}"></span>
-	</div>
+					<!-- Marca -->
+					<div class="row g-3 align-items-center mb-3">
+						<div class="col-md-2">
+							<label for="marca" class="form-label mb-0 fw-bold">Marca:</label>
+						</div>
+						<div class="col-md-4 mt-1 mt-md-3">
+							<input type="text" class="form-control form-control-sm" id="marca" th:field="*{marca}">
+						</div>
+						<span class="text-danger" th:if="${#fields.hasErrors('marca')}" th:errors="*{marca}"></span>
+					</div>
 
-	<!-- Modelo -->
-	<div class="row g-3 align-items-center mb-3">
-		<div class="col-md-2">
-			<label for="modelo" class="form-label mb-0 fw-bold">Modelo:</label>
-		</div>
-		<div class="col-md-4 mt-1 mt-md-3">
-			<input type="text" class="form-control form-control-sm" id="modelo"
-				th:field="*{modelo}">
-		</div>
-		<span class="text-danger" th:if="${#fields.hasErrors('modelo')}" th:errors="*{modelo}"></span>
-	</div>
+					<!-- Modelo -->
+					<div class="row g-3 align-items-center mb-3">
+						<div class="col-md-2">
+							<label for="modelo" class="form-label mb-0 fw-bold">Modelo:</label>
+						</div>
+						<div class="col-md-4 mt-1 mt-md-3">
+							<input type="text" class="form-control form-control-sm" id="modelo" th:field="*{modelo}">
+						</div>
+						<span class="text-danger" th:if="${#fields.hasErrors('modelo')}" th:errors="*{modelo}"></span>
+					</div>
 
-<!-- Año -->
-<div class="row g-3 align-items-center mb-3">
-    <div class="col-md-2">
-        <label for="anio" class="form-label mb-0 fw-bold">Año:</label>
-    </div>
-    <div class="col-md-4 mt-1 mt-md-3">
-        <input type="number" class="form-control form-control-sm" id="anio"
-            th:field="*{anio}" min="2015" max="2025">
-    </div>
-    <span class="text-danger" th:if="${#fields.hasErrors('anio')}" th:errors="*{anio}"></span>
-</div>
+					<!-- Año -->
+					<div class="row g-3 align-items-center mb-3">
+						<div class="col-md-2">
+							<label for="anio" class="form-label mb-0 fw-bold">Año:</label>
+						</div>
+						<div class="col-md-4 mt-1 mt-md-3">
+							<select th:field="*{anio}" class="form-select">
+								<option value="" disabled>Seleccione año</option>
+								<option th:each="year : ${years}" th:value="${year}" th:text="${year}"></option>
+							</select>
+						</div>
+						<span class="text-danger" th:if="${#fields.hasErrors('anio')}" th:errors="*{anio}"></span>
+					</div>
 
-<!-- Precio -->
-<div class="row g-3 align-items-center mb-3">
-    <div class="col-md-2">
-        <label for="precio" class="form-label mb-0 fw-bold">Precio:</label>
-    </div>
-    <div class="col-md-4 mt-1 mt-md-3">
-<input type="text" class="form-control form-control-sm" id="precio"
-       th:field="*{precio}" placeholder="Ej: 45000000" oninput="validarPrecio(this)">
-    </div>
-    <span class="text-danger" th:if="${#fields.hasErrors('precio')}" th:errors="*{precio}"></span>
-</div>
+					<!-- Precio -->
+					<div class="row g-3 align-items-center mb-3">
+						<div class="col-md-2">
+							<label for="precio" class="form-label mb-0 fw-bold">Precio:</label>
+						</div>
+						<div class="col-md-4 mt-1 mt-md-3">
+							<input type="text" class="form-control form-control-sm" id="precio" th:field="*{precio}"
+								placeholder="Ej: 45000000" oninput="validarPrecio(this)">
+						</div>
+						<span class="text-danger" th:if="${#fields.hasErrors('precio')}" th:errors="*{precio}"></span>
+					</div>
 
-	<!-- Estado -->
-	<div class="row g-3 align-items-center mb-3">
-		<div class="col-md-2">
-			<label for="estado" class="form-label mb-0 fw-bold">Estado:</label>
-		</div>
-		<div class="col-md-4 mt-1 mt-md-3">
-        <select class="form-select form-select-sm" id="estado" th:field="*{estado}" onchange="toggleKilometraje()">
-	    <option value="" disabled>Seleccionar</option>
-	    <option value="Nuevo">Nuevo</option>
-	    <option value="Semi-Nuevo">Semi-Nuevo</option>
-	    <option value="Usado">Usado</option>
-        </select>
+					<!-- Estado -->
+					<div class="row g-3 align-items-center mb-3">
+						<div class="col-md-2">
+							<label for="estado" class="form-label mb-0 fw-bold">Estado:</label>
+						</div>
+						<div class="col-md-4 mt-1 mt-md-3">
+							<select class="form-select form-select-sm" id="estado" th:field="*{estado}"
+								onchange="toggleKilometraje()">
+								<option value="" disabled>Seleccionar</option>
+								<option value="Nuevo">Nuevo</option>
+								<option value="Semi-Nuevo">Semi-Nuevo</option>
+								<option value="Usado">Usado</option>
+							</select>
 
-		</div>
-		<span class="text-danger" th:if="${#fields.hasErrors('estado')}" th:errors="*{estado}"></span>
-	</div>
+						</div>
+						<span class="text-danger" th:if="${#fields.hasErrors('estado')}" th:errors="*{estado}"></span>
+					</div>
 
-	<div class="row g-3 align-items-center mb-3">
-		<div class="col-md-2">
-			<label for="kilometraje" class="form-label mb-0 fw-bold">Kilometraje:</label>
-		</div>
-		<div class="col-md-4 mt-1 mt-md-3">
-			<input type="number" class="form-control form-control-sm" id="kilometraje"
-				th:field="*{kilometraje}">
-		</div>
-		<span class="text-danger" th:if="${#fields.hasErrors('kilometraje')}" th:errors="*{kilometraje}"></span>
-	</div>	
+					<div class="row g-3 align-items-center mb-3">
+						<div class="col-md-2">
+							<label for="kilometraje" class="form-label mb-0 fw-bold">Kilometraje:</label>
+						</div>
+						<div class="col-md-4 mt-1 mt-md-3">
+							<input type="number" class="form-control form-control-sm" id="kilometraje"
+								th:field="*{kilometraje}">
+						</div>
+						<span class="text-danger" th:if="${#fields.hasErrors('kilometraje')}"
+							th:errors="*{kilometraje}"></span>
+					</div>
 
-	<!-- Tipo Bencina -->
-	<div class="row g-3 align-items-center mb-3">
-		<div class="col-md-2">
-			<label for="tipoBencina" class="form-label mb-0 fw-bold">Tipo de Combustible:</label>
-		</div>
-		<div class="col-md-4 mt-1 mt-md-3">
-			<select class="form-select form-select-sm" id="tipoBencina"
-				th:field="*{tipoBencina}">
-				<option value="" disabled>Seleccionar</option>
-				<option value="Bencina">Bencina</option>
-				<option value="Diesel">Diesel</option>
-				<option value="Eléctrico">Eléctrico</option>
-				<option value="Híbrido">Híbrido</option>
-			</select>
-		</div>
-		<span class="text-danger" th:if="${#fields.hasErrors('tipoBencina')}" th:errors="*{tipoBencina}"></span>
-	</div>
+					<!-- Tipo Bencina -->
+					<div class="row g-3 align-items-center mb-3">
+						<div class="col-md-2">
+							<label for="tipoBencina" class="form-label mb-0 fw-bold">Tipo de Combustible:</label>
+						</div>
+						<div class="col-md-4 mt-1 mt-md-3">
+							<select class="form-select form-select-sm" id="tipoBencina" th:field="*{tipoBencina}">
+								<option value="" disabled>Seleccionar</option>
+								<option value="Bencina">Bencina</option>
+								<option value="Diesel">Diesel</option>
+								<option value="Eléctrico">Eléctrico</option>
+								<option value="Híbrido">Híbrido</option>
+							</select>
+						</div>
+						<span class="text-danger" th:if="${#fields.hasErrors('tipoBencina')}"
+							th:errors="*{tipoBencina}"></span>
+					</div>
 
-	<div class="row g-3 align-items-center mb-3">
-		<div class="col-md-2">
-			<label for="transmision" class="form-label mb-0 fw-bold">Transimision:</label>
-		</div>
-		<div class="col-md-4 mt-1 mt-md-3">
-			<select class="form-select form-select-sm" id="transmision"
-				th:field="*{transmision}">
-				<option value="" disabled>Seleccionar</option>
-				<option value="Automatica">Automatica</option>
-				<option value="Mecanica">Mecanica</option>
-			</select>
-		</div>
-		<span class="text-danger" th:if="${#fields.hasErrors('tipoBencina')}" th:errors="*{tipoBencina}"></span>
-	</div>
+					<div class="row g-3 align-items-center mb-3">
+						<div class="col-md-2">
+							<label for="transmision" class="form-label mb-0 fw-bold">Transimision:</label>
+						</div>
+						<div class="col-md-4 mt-1 mt-md-3">
+							<select class="form-select form-select-sm" id="transmision" th:field="*{transmision}">
+								<option value="" disabled>Seleccionar</option>
+								<option value="Automatica">Automatica</option>
+								<option value="Mecanica">Mecanica</option>
+							</select>
+						</div>
+						<span class="text-danger" th:if="${#fields.hasErrors('tipoBencina')}"
+							th:errors="*{tipoBencina}"></span>
+					</div>
 
-	<div class="row g-3 align-items-center mb-3">
-		<div class="col-md-2">
-			<label for="image" class="form-label mb-0 fw-bold">Imagen:</label>
-		</div>
+					<div class="row g-3 align-items-center mb-3">
+						<div class="col-md-2">
+							<label for="image" class="form-label mb-0 fw-bold">Imagen:</label>
+						</div>
 
-		<div class="col-md-4 mt-1 mt-md-3">
-			<div class="col-12 mt-1 mb-1" th:if="${producto.imagen != null}">
-				<div class="col-md-12 mt-1 mt-md-3" id="imageImageDiv">
-					<table>
-						<tr>
-							<td>
-								<a th:href="@{'/productos/viewimg/' + ${producto.id} + '/image'}"
-									title="Ver Imagen">
-									<img th:if="${producto.imagen != null}"
-										th:src="@{'/images/vehiculos/' + ${producto.imagen}}" width="100px"
-										class="border border-white shadow" id="imageImage"><br>
-								</a>
-							</td>
-							<td class="ps-2">
-								<a sec:authorize="hasRole('ROLE_ADMIN')" href="#" title="Borrar Imagen"
-									th:attr="onclick=|clearImageField('imageImage','imageImageText','imageImageDiv')|">
-									<svg th:replace="layout/icons_svg :: svg-delete"></svg>
-								</a>
-							</td>
-						</tr>
-					</table>
-				</div>
-			</div>
+						<div class="col-md-4 mt-1 mt-md-3">
+							<div class="col-12 mt-1 mb-1" th:if="${producto.imagen != null}">
+								<div class="col-md-12 mt-1 mt-md-3" id="imageImageDiv">
+									<table>
+										<tr>
+											<td>
+												<a th:href="@{'/productos/viewimg/' + ${producto.id} + '/image'}"
+													title="Ver Imagen">
+													<img th:if="${producto.imagen != null}"
+														th:src="@{'/images/vehiculos/' + ${producto.imagen}}"
+														width="100px" class="border border-white shadow"
+														id="imageImage"><br>
+												</a>
+											</td>
+											<td class="ps-2">
+												<a sec:authorize="hasRole('ROLE_ADMIN')" href="#" title="Borrar Imagen"
+													th:attr="onclick=|clearImageField('imageImage','imageImageText','imageImageDiv')|">
+													<svg th:replace="layout/icons_svg :: svg-delete"></svg>
+												</a>
+											</td>
+										</tr>
+									</table>
+								</div>
+							</div>
 
-			<div class="col-12 mt-2">
-				<input class="form-control form-control-sm file" type="file" id="image"
-					name="image_formname">
-				<input type="hidden" class="form-control form-control-sm" id="imageImageText"
-					name="imageImageText" th:value="${producto.imagen}">
-				<input type="hidden" class="form-control form-control-sm" id="imageImageTextOld"
-					name="imageImageTextOld" th:value="${producto.imagen}">
-			</div>
-		</div>
-	</div>
+							<div class="col-12 mt-2">
+								<input class="form-control form-control-sm file" type="file" id="image"
+									name="image_formname">
+								<input type="hidden" class="form-control form-control-sm" id="imageImageText"
+									name="imageImageText" th:value="${producto.imagen}">
+								<input type="hidden" class="form-control form-control-sm" id="imageImageTextOld"
+									name="imageImageTextOld" th:value="${producto.imagen}">
+							</div>
+						</div>
+					</div>
 
-	<!-- Botón Guardar -->
-	<div class="row g-3 align-items-center mb-3">
-		<div class="col-md-2 mt-4">
-			<input class="btn standard-button" sec:authorize="hasRole('ROLE_ADMIN')"
-				type="submit"
-				th:value="${#strings.equalsIgnoreCase(screen,'CREATE')?'Nuevo Auto':'Modificar Auto'}">
-			<input sec:authorize="!hasRole('ROLE_ADMIN')" type="submit"
-				th:value="${#strings.equalsIgnoreCase(screen,'CREATE')?'Nuevo Auto':'Modificar Auto'}"
-				disabled>
-		</div>
-	</div>
-</form>
+					<!-- Botón Guardar -->
+					<div class="row g-3 align-items-center mb-3">
+						<div class="col-md-2 mt-4">
+							<input class="btn standard-button" sec:authorize="hasRole('ROLE_ADMIN')" type="submit"
+								th:value="${#strings.equalsIgnoreCase(screen,'CREATE')?'Nuevo Auto':'Modificar Auto'}">
+							<input sec:authorize="!hasRole('ROLE_ADMIN')" type="submit"
+								th:value="${#strings.equalsIgnoreCase(screen,'CREATE')?'Nuevo Auto':'Modificar Auto'}"
+								disabled>
+						</div>
+					</div>
+				</form>
 
 
 			</div>
@@ -205,46 +207,45 @@
 	<div th:insert="layout/layout :: jquery-js"></div>
 	<div th:insert="layout/layout :: jquery-ui-js"></div>
 	<div th:insert="layout/layout :: bootstrap-js"></div>
-	
-	
-	
+
+
+
 	<script th:replace="layout/layout :: clear_imagefield"></script>
-	
+
 	<script>
-	function toggleKilometraje() {
-		const estado = document.getElementById('estado').value;
-		const kilometraje = document.getElementById('kilometraje');
+		function toggleKilometraje() {
+			const estado = document.getElementById('estado').value;
+			const kilometraje = document.getElementById('kilometraje');
 
-		if (estado === 'Nuevo') {
-			kilometraje.disabled = true;
-			kilometraje.value = '';
-		} else {
-			kilometraje.disabled = false;
+			if (estado === 'Nuevo') {
+				kilometraje.disabled = true;
+				kilometraje.value = '';
+			} else {
+				kilometraje.disabled = false;
+			}
 		}
-	}
 
-	// Ejecutar al cargar la página (útil en modo editar)
-	window.addEventListener('DOMContentLoaded', toggleKilometraje);
-</script>
+		// Ejecutar al cargar la página (útil en modo editar)
+		window.addEventListener('DOMContentLoaded', toggleKilometraje);
+	</script>
 
-<script>
-function formatearPatente(input) {
-    let valor = input.value.toUpperCase().replace(/[^A-Z0-9]/g, '');
+	<script>
+		function formatearPatente(input) {
+			let valor = input.value.toUpperCase().replace(/[^A-Z0-9]/g, '');
 
-    if (valor.length <= 6) {
-        valor = valor.replace(/^([A-Z]{3})([0-9]{0,3})$/, '$1-$2');
-    } else {
-        valor = valor.replace(/^([A-Z]{4})([0-9]{0,2})$/, '$1-$2');
-    }
+			if (valor.length <= 6) {
+				valor = valor.replace(/^([A-Z]{3})([0-9]{0,3})$/, '$1-$2');
+			} else {
+				valor = valor.replace(/^([A-Z]{4})([0-9]{0,2})$/, '$1-$2');
+			}
 
-    input.value = valor;
-}
-</script>
+			input.value = valor;
+		}
+	</script>
 
 
 
 
 </body>
+
 </html>
-
-

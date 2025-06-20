@@ -10,7 +10,10 @@ import org.springframework.web.multipart.MultipartFile;
 public interface UploadService {
 
 	public Resource load(String filename) throws MalformedURLException;
+
 	public String copy(MultipartFile file) throws IOException;
+
 	public boolean delete(String filename);
+
 	public Path getPath(String filename);
 }
