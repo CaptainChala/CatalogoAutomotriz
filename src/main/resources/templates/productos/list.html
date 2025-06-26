@@ -19,6 +19,10 @@
             <a class="btn standard-button" sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/productos/form}"
                 th:text="${applicationData.getScreenName(optionCode,'CREATE')}"></a>
         </div>
+        <div class="mb-2">
+            <h5>Total de autos: <span th:text="${numproducto}"></span></h5>
+        </div>
+
         <div class="row row-cols-1 row-cols-md-3 g-4">
             <div class="col" th:each="entity : ${listproducto}">
                 <div class="card h-100 p-5 shadow-sm">
